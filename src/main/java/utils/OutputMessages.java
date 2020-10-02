@@ -1,6 +1,6 @@
 package utils;
 
-public class OutputMessages {
+public final class OutputMessages {
 
     private OutputMessages()    {
         //private constructor to prevent instantiation of utils

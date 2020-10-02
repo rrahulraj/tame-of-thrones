@@ -18,15 +18,15 @@ public class SeasarCipherServiceImpl implements CipherService {
             return encryptedChar;
         }
 
-        int characterSetSize = 26;
-        char messageWheelStart = 'A';
+        int messageWheelSize = 26;
+        char messageWheelStartChar = 'A';
 
-        int encryptedCharNumber = encryptedChar - messageWheelStart;
+        int encryptedCharNumber = encryptedChar - messageWheelStartChar;
         int decryptedCharNumber = encryptedCharNumber - messageWheelRotations;
         if(decryptedCharNumber < 0)    {
-            decryptedCharNumber += characterSetSize;
+            decryptedCharNumber += messageWheelSize;
         }
 
-        return (char) (messageWheelStart + decryptedCharNumber);
+        return (char) (messageWheelStartChar + decryptedCharNumber);
     }
 }

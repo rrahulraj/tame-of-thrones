@@ -3,7 +3,7 @@ package utils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StringUtils {
+public final class StringUtils {
     
     private StringUtils()   {
         //private constructor to prevent instantiation of utils
