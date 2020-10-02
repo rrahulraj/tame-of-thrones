@@ -1,5 +1,7 @@
 package com.rahul.geektrust.services.cipher;
 
+import com.rahul.geektrust.constants.SeasarCipherConstants;
+
 public class SeasarCipherServiceImpl implements CipherService {
 
     @Override
@@ -18,15 +20,12 @@ public class SeasarCipherServiceImpl implements CipherService {
             return encryptedChar;
         }
 
-        int messageWheelSize = 26;
-        char messageWheelStartChar = 'A';
-
-        int encryptedCharNumber = encryptedChar - messageWheelStartChar;
+        int encryptedCharNumber = encryptedChar - SeasarCipherConstants.MESSAGE_WHEEL_START_CHAR;
         int decryptedCharNumber = encryptedCharNumber - messageWheelRotations;
         if(decryptedCharNumber < 0)    {
-            decryptedCharNumber += messageWheelSize;
+            decryptedCharNumber += SeasarCipherConstants.MESSAGE_WHEEL_SIZE;
         }
 
-        return (char) (messageWheelStartChar + decryptedCharNumber);
+        return (char) (SeasarCipherConstants.MESSAGE_WHEEL_START_CHAR + decryptedCharNumber);
     }
 }
