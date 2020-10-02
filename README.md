@@ -14,7 +14,7 @@ $ git clone https://github.com/rrahulraj/tame-of-thrones.git
 ```
 2. In the root directory execute the following command to install dependencies
 ```
-$ mvn clean  install -DskipTests
+$ mvn clean install -DskipTests
 ```
 3. In the root directory execute the following command to run the program
 ```
