@@ -3,12 +3,12 @@ package com.rahul.geektrust.services.tameofthrones;
 import com.rahul.geektrust.constants.GoldenCrownConstants;
 import com.rahul.geektrust.exceptions.InvalidInputException;
 import com.rahul.geektrust.models.MessageDraft;
-import com.rahul.geektrust.services.outputs.ConsoleOutputServiceImpl;
-import com.rahul.geektrust.services.inputreaders.InputReaderService;
-import com.rahul.geektrust.services.outputs.OutputService;
-import com.rahul.geektrust.services.messengers.RoyalMessengerService;
-import com.rahul.geektrust.services.inputreaders.TxtInputReaderServiceImpl;
-import com.rahul.geektrust.services.messengers.RoyalMessengerServiceImpl;
+import com.rahul.geektrust.services.output.ConsoleOutputServiceImpl;
+import com.rahul.geektrust.services.messagedraftsreader.MessageDraftsReaderService;
+import com.rahul.geektrust.services.output.OutputService;
+import com.rahul.geektrust.services.messenger.RoyalMessengerService;
+import com.rahul.geektrust.services.messagedraftsreader.TxtFileMessageDraftsReaderServiceImpl;
+import com.rahul.geektrust.services.messenger.RoyalMessengerServiceImpl;
 import utils.OutputMessages;
 
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class GoldenCrownServiceImpl implements TameOfThronesService {
     }
 
     private Set<MessageDraft> getMessageDraftsFromInputFile(String arg) throws InvalidInputException {
-        InputReaderService inputReader = new TxtInputReaderServiceImpl();
-        return inputReader.readMessageDrafts(arg);
+        MessageDraftsReaderService messageDraftsReaderService = new TxtFileMessageDraftsReaderServiceImpl();
+        return messageDraftsReaderService.read(arg);
     }
 
     private List<String> sendMessageDrafts(Set<MessageDraft> messageDrafts) {

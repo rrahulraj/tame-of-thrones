@@ -22,12 +22,11 @@ class GoldenCrownServiceImplTest {
 
     private final PrintStream originalOut = System.out;
 
-    private GoldenCrownServiceImpl tameOfThronesService;
+    private GoldenCrownServiceImpl tameOfThronesService  = new GoldenCrownServiceImpl();;
 
     @BeforeEach
-    public void init() {
+    public void setupStreams() {
         System.setOut(new PrintStream(outContent));
-        tameOfThronesService = new GoldenCrownServiceImpl();
     }
 
     @AfterEach
@@ -36,13 +35,13 @@ class GoldenCrownServiceImplTest {
     }
 
     @Test
-    void expectedOutputOnNotEnoughAllies() throws InvalidInputException {
+    void playTameOfThronesExpectedOutputOnNotEnoughAllies() throws InvalidInputException {
         tameOfThronesService.playTameOfThrones(lessThan3Allies);
         assertEquals("NONE", outContent.toString());
     }
 
     @Test
-    void expectedOutputOnEnoughAllies() throws InvalidInputException {
+    void playTameOfThronesExpectedOutputOnEnoughAllies() throws InvalidInputException {
         tameOfThronesService.playTameOfThrones(greaterOrEqualTo3Allies);
         String expectedOutput = GoldenCrownConstants.PROSPECTIVE_RULER_KINGDOM_NAME + " AIR ICE LAND";
         assertEquals(expectedOutput, outContent.toString());
