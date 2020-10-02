@@ -9,7 +9,7 @@ import com.rahul.geektrust.services.output.OutputService;
 import com.rahul.geektrust.services.messenger.RoyalMessengerService;
 import com.rahul.geektrust.services.messagedraftsreader.TxtFileMessageDraftsReaderServiceImpl;
 import com.rahul.geektrust.services.messenger.RoyalMessengerServiceImpl;
-import utils.OutputMessages;
+import com.rahul.geektrust.constants.OutputMessages;
 
 import java.util.ArrayList;
 import java.util.List;

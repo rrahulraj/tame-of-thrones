@@ -1,7 +1,7 @@
 package com.rahul.geektrust.service.impl.utils;
 
 import org.junit.jupiter.api.Test;
-import utils.StringUtils;
+import com.rahul.geektrust.utils.StringUtils;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

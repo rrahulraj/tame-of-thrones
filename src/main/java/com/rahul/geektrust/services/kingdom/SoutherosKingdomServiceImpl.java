@@ -3,7 +3,7 @@ package com.rahul.geektrust.services.kingdom;
 import com.rahul.geektrust.enums.SoutherosKingdoms;
 import com.rahul.geektrust.services.cipher.CipherService;
 import com.rahul.geektrust.services.cipher.SeasarCipherServiceImpl;
-import utils.StringUtils;
+import com.rahul.geektrust.utils.StringUtils;
 
 public class SoutherosKingdomServiceImpl implements KingdomService {
 

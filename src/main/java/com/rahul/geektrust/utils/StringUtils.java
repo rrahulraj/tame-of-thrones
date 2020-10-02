@@ -1,4 +1,4 @@
-package utils;
+package com.rahul.geektrust.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 public final class StringUtils {
     
     private StringUtils()   {
-        //private constructor to prevent instantiation of utils
+        //private constructor to prevent instantiation of com.rahul.geektrust.utils
     }
 
     public static Map<Character, Integer> generateFrequencyMapOfChars(String inputString) {
