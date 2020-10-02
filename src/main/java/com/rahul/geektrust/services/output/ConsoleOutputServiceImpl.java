@@ -7,8 +7,6 @@ public class ConsoleOutputServiceImpl implements OutputService {
 
     @Override
     public void display(List<String> allies) {
-        Collections.sort(allies);
-
         StringBuilder outputBuilder = new StringBuilder();
         for(String name : allies)    {
             outputBuilder.append(name).append(" ");

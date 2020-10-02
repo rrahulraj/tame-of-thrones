@@ -39,13 +39,6 @@ class ConsoleOutputServiceImplTest {
     }
 
     @Test
-    void displayDisplaysSortedStringsConsoleOutput()  {
-        List<String> displayStrings  = Arrays.asList("bcd", "abc");
-        consoleOutputService.display(displayStrings);
-        assertEquals("abc bcd", outContent.toString());
-    }
-
-    @Test
     void displayDisplaysEmptyOutputOnEmptyListAsArgument()    {
         consoleOutputService.display(Collections.emptyList());
         assertEquals("", outContent.toString());
