@@ -3,11 +3,11 @@
 ## Summary
 Solution for the golden crown problem coding challenge on geektrust
 
-##System Requirements
+## System Requirements
 1. Java 1.11 or above
 2. Maven 3.6 or above
 
-##Steps to run the program:
+## Steps to run the program:
 1. Clone the repository
 > $ git clone https://github.com/rrahulraj/tame-of-thrones.git
 
@@ -17,7 +17,7 @@ Solution for the golden crown problem coding challenge on geektrust
 3. In the root directory execute the following command to run the program
 > $ java -jar target/geektrust.jar <path-to-input-file>
 
-##Run Tests:
+## Run Tests:
 Run tests
 Execute following to run the tests:
 > $ mvn test
