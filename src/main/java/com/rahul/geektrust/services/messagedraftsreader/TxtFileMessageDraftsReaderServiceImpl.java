@@ -8,18 +8,17 @@ import com.rahul.geektrust.models.MessageDraft;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 public class TxtFileMessageDraftsReaderServiceImpl implements MessageDraftsReaderService {
 
-    public Set<MessageDraft> read(String filePath) throws InvalidInputException {
+    public List<MessageDraft> read(String filePath) throws InvalidInputException {
         FileInputStream fileInputStream = createFileInputStream(filePath);
         List<MessageDraft> messageDrafts = new ArrayList<>();
 
@@ -33,13 +32,20 @@ public class TxtFileMessageDraftsReaderServiceImpl implements MessageDraftsReade
         }
         scanner.close();
 
-        return createUniqueMessageDraftsSet(messageDrafts);
+        return getUniqueMessageDrafts(messageDrafts);
     }
 
-    private Set<MessageDraft> createUniqueMessageDraftsSet(List<MessageDraft> messageDrafts)   {
-        return messageDrafts.stream()
-                .collect(Collectors.toCollection(() ->
-                        new TreeSet<>(Comparator.comparing(MessageDraft::getKingdomName))));
+    private List<MessageDraft> getUniqueMessageDrafts(List<MessageDraft> messageDrafts)   {
+        Set<String> kingdomNames = new HashSet<>();
+        List<MessageDraft> uniqueMessageDrafts = new ArrayList<>();
+        messageDrafts.forEach(messageDraft -> {
+            if(!kingdomNames.contains(messageDraft.getKingdomName()))   {
+                uniqueMessageDrafts.add(messageDraft);
+                kingdomNames.add(messageDraft.getKingdomName());
+            }
+        });
+
+        return uniqueMessageDrafts;
     }
 
     private MessageDraft buildMessageDraft(String[] splitStr) {

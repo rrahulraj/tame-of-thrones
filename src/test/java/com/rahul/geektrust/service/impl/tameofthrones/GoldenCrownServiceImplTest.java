@@ -43,7 +43,7 @@ class GoldenCrownServiceImplTest {
     @Test
     void playTameOfThronesExpectedOutputOnEnoughAllies() throws InvalidInputException {
         tameOfThronesService.playTameOfThrones(greaterOrEqualTo3Allies);
-        String expectedOutput = GoldenCrownConstants.PROSPECTIVE_RULER_KINGDOM_NAME + " AIR ICE LAND";
+        String expectedOutput = GoldenCrownConstants.PROSPECTIVE_RULER_KINGDOM_NAME + " AIR LAND ICE";
         assertEquals(expectedOutput, outContent.toString());
     }
 

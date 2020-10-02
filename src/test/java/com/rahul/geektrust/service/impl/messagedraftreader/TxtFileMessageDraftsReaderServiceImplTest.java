@@ -33,33 +33,30 @@ class TxtFileMessageDraftsReaderServiceImplTest {
 
     @Test
     void readThrowsInvalidInputExceptionOnInaccessibleFile()    {
-        Exception exception = assertThrows(InvalidInputException.class, () -> messageDraftsReaderService.read(""));
-
         String expectedMessage = ErrorMessages.ERROR_ACCESSING_INPUT_FILE;
+        Exception exception = assertThrows(InvalidInputException.class, () -> messageDraftsReaderService.read(""));
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
     void readThrowsInvalidInputExceptionOnInvalidKingdomNameForSomeInputLine()   {
-        Exception exception = assertThrows(InvalidInputException.class, () -> messageDraftsReaderService.read(invalidKingdomNameInputPath));
-
         String expectedMessage = ErrorMessages.INVALID_KINGDOM_NAME_IN_INPUT_FILE;
+        Exception exception = assertThrows(InvalidInputException.class, () -> messageDraftsReaderService.read(invalidKingdomNameInputPath));
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
     void readThrowsInvalidInputExceptionOnNoMessageForSomeInputLine()   {
-        Exception exception = assertThrows(InvalidInputException.class, () -> messageDraftsReaderService.read(noMessageOnAInputLinePath));
-
         String expectedMessage = ErrorMessages.INVALID_STRING_IN_INPUT_FILE;
+        Exception exception = assertThrows(InvalidInputException.class, () -> messageDraftsReaderService.read(noMessageOnAInputLinePath));
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
-    void readReadsMessageDraftsForValidInput() throws InvalidInputException    {
+    void readReturnsMessageDraftsForValidInputInSameOrderAsInput() throws InvalidInputException    {
         MessageDraft messageDraft1 = MessageDraft.builder()
                 .kingdomName("AIR")
                 .secretMessage("ROZO")
@@ -69,9 +66,7 @@ class TxtFileMessageDraftsReaderServiceImplTest {
                 .secretMessage("FAIJWJSOOFAMAU")
                 .build();
         List<MessageDraft> expectedMessageDrafts = Arrays.asList(messageDraft1, messageDraft2);
-
-        Set<MessageDraft> actualMessageDraftsSet = messageDraftsReaderService.read(properInputPath);
-        List<MessageDraft> actualMessageDrafts = new ArrayList<>(actualMessageDraftsSet);
+        List<MessageDraft> actualMessageDrafts = messageDraftsReaderService.read(properInputPath);
 
         for(int i = 0; i < 2; i++)  {
             assertEquals(expectedMessageDrafts.get(i).getKingdomName(), actualMessageDrafts.get(i).getKingdomName());
@@ -80,15 +75,16 @@ class TxtFileMessageDraftsReaderServiceImplTest {
     }
 
     @Test
-    void readReadsDuplicateInputLinesAsOne() throws InvalidInputException    {
-        Set<MessageDraft> messageDrafts = messageDraftsReaderService.read(duplicateInputLinesInputPath);
-        assertEquals(3, messageDrafts.size());
+    void readReturnsDuplicateInputLinesAsOne() throws InvalidInputException    {
+        List<MessageDraft> actualMessageDrafts = messageDraftsReaderService.read(duplicateInputLinesInputPath);
+        int numberOfUniqueMessageDrafts = 3;
+        assertEquals(numberOfUniqueMessageDrafts, actualMessageDrafts.size());
     }
 
     @Test
-    void readReadsMessageDraftsContainingMessagesWithSpaces() throws InvalidInputException    {
-        Set<MessageDraft> messageDraftsSet = messageDraftsReaderService.read(whiteSpacesInMessageInputPath);
-        MessageDraft firstMessageDraft = messageDraftsSet.iterator().next();
+    void readReturnsMessageDraftsContainingMessagesWithSpaces() throws InvalidInputException    {
+        List<MessageDraft> actualMessageDrafts = messageDraftsReaderService.read(whiteSpacesInMessageInputPath);
+        MessageDraft firstMessageDraft = actualMessageDrafts.get(0);
         String actualKingdomName = firstMessageDraft.getKingdomName();
         String actualMessage = firstMessageDraft.getSecretMessage();
         assertEquals("AIR", actualKingdomName);
@@ -97,8 +93,8 @@ class TxtFileMessageDraftsReaderServiceImplTest {
 
     @Test
     void readReturnsEmptyArrayOfAlliesOnEmptyInputFile() throws InvalidInputException   {
-        Set<MessageDraft> messageDrafts = messageDraftsReaderService.read(emptyInputPath);
-        assertEquals(0, messageDrafts.size());
+        List<MessageDraft> actualMessageDrafts = messageDraftsReaderService.read(emptyInputPath);
+        assertEquals(0, actualMessageDrafts.size());
     }
 
 }

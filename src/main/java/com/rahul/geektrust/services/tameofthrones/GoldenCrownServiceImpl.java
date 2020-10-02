@@ -13,22 +13,21 @@ import utils.OutputMessages;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class GoldenCrownServiceImpl implements TameOfThronesService {
 
     public void playTameOfThrones(String inputFilePath) throws InvalidInputException {
-        Set<MessageDraft> messageDrafts = getMessageDraftsFromInputFile(inputFilePath);
+        List<MessageDraft> messageDrafts = getMessageDraftsFromInputFile(inputFilePath);
         List<String> allyNames = sendMessageDrafts(messageDrafts);
         outputResultToConsole(allyNames);
     }
 
-    private Set<MessageDraft> getMessageDraftsFromInputFile(String arg) throws InvalidInputException {
+    private List<MessageDraft> getMessageDraftsFromInputFile(String arg) throws InvalidInputException {
         MessageDraftsReaderService messageDraftsReaderService = new TxtFileMessageDraftsReaderServiceImpl();
         return messageDraftsReaderService.read(arg);
     }
 
-    private List<String> sendMessageDrafts(Set<MessageDraft> messageDrafts) {
+    private List<String> sendMessageDrafts(List<MessageDraft> messageDrafts) {
         RoyalMessengerService royalMessenger = new RoyalMessengerServiceImpl();
         List<String> allyNames = new ArrayList<>();
         messageDrafts.forEach(messageDraft -> {
