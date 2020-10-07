@@ -26,17 +26,35 @@ public class TxtFileMessageDraftsReaderServiceImpl implements MessageDraftsReade
         Scanner scanner=new Scanner(fileInputStream);
         while(scanner.hasNextLine()) {
             String readLine = scanner.nextLine();
-            String[] splitStr = readLine.split("\\s+");
-            validateLine(splitStr);
-            MessageDraft messageDraft = buildMessageDraft(splitStr);
-            if(!receiverKingdomNames.contains(messageDraft.getKingdomName()))    {
-                messageDrafts.add(messageDraft);
-                receiverKingdomNames.add(messageDraft.getKingdomName());
-            }
+            String[] curLineTokens = readLine.split("\\s+");
+            validateLine(curLineTokens);
+            processLine(curLineTokens, messageDrafts, receiverKingdomNames);
         }
         scanner.close();
 
         return messageDrafts;
+    }
+
+    void validateLine(String[] splitStr) throws InvalidInputException {
+        if(splitStr.length < 2) {
+            throw new InvalidInputException(ErrorMessages.INVALID_STRING_IN_INPUT_FILE);
+        }
+        String kingdomName = splitStr[0];
+        List<String> kingdomNames = Stream.of(SoutherosKingdoms.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
+        if(!kingdomNames.contains(kingdomName))    {
+            throw new InvalidInputException(ErrorMessages.INVALID_KINGDOM_NAME_IN_INPUT_FILE);
+        }
+    }
+
+    private void processLine(String[] curLineTokens, List<MessageDraft> messageDrafts, Set<String> receiverKingdomNames) {
+        MessageDraft messageDraft = buildMessageDraft(curLineTokens);
+        if(receiverKingdomNames.contains(messageDraft.getKingdomName()))    {
+            return;
+        }
+        messageDrafts.add(messageDraft);
+        receiverKingdomNames.add(messageDraft.getKingdomName());
     }
 
     private MessageDraft buildMessageDraft(String[] splitStr) {
@@ -52,19 +70,6 @@ public class TxtFileMessageDraftsReaderServiceImpl implements MessageDraftsReade
                 .kingdomName(kingdomName)
                 .secretMessage(secretMessage)
                 .build();
-    }
-
-    void validateLine(String[] splitStr) throws InvalidInputException {
-        if(splitStr.length < 2) {
-            throw new InvalidInputException(ErrorMessages.INVALID_STRING_IN_INPUT_FILE);
-        }
-        String kingdomName = splitStr[0];
-        List<String> kingdomNames = Stream.of(SoutherosKingdoms.values())
-                .map(Enum::name)
-                .collect(Collectors.toList());
-        if(!kingdomNames.contains(kingdomName))    {
-            throw new InvalidInputException(ErrorMessages.INVALID_KINGDOM_NAME_IN_INPUT_FILE);
-        }
     }
 
     FileInputStream createFileInputStream(String filePath) throws InvalidInputException {
