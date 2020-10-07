@@ -21,6 +21,7 @@ public class TxtFileMessageDraftsReaderServiceImpl implements MessageDraftsReade
     public List<MessageDraft> read(String filePath) throws InvalidInputException {
         FileInputStream fileInputStream = createFileInputStream(filePath);
         List<MessageDraft> messageDrafts = new ArrayList<>();
+        Set<String> receiverKingdomNames = new HashSet<>();
 
         Scanner scanner=new Scanner(fileInputStream);
         while(scanner.hasNextLine()) {
@@ -28,24 +29,14 @@ public class TxtFileMessageDraftsReaderServiceImpl implements MessageDraftsReade
             String[] splitStr = readLine.split("\\s+");
             validateLine(splitStr);
             MessageDraft messageDraft = buildMessageDraft(splitStr);
-            messageDrafts.add(messageDraft);
+            if(!receiverKingdomNames.contains(messageDraft.getKingdomName()))    {
+                messageDrafts.add(messageDraft);
+                receiverKingdomNames.add(messageDraft.getKingdomName());
+            }
         }
         scanner.close();
 
-        return getUniqueMessageDrafts(messageDrafts);
-    }
-
-    private List<MessageDraft> getUniqueMessageDrafts(List<MessageDraft> messageDrafts)   {
-        Set<String> kingdomNames = new HashSet<>();
-        List<MessageDraft> uniqueMessageDrafts = new ArrayList<>();
-        messageDrafts.forEach(messageDraft -> {
-            if(!kingdomNames.contains(messageDraft.getKingdomName()))   {
-                uniqueMessageDrafts.add(messageDraft);
-                kingdomNames.add(messageDraft.getKingdomName());
-            }
-        });
-
-        return uniqueMessageDrafts;
+        return messageDrafts;
     }
 
     private MessageDraft buildMessageDraft(String[] splitStr) {
